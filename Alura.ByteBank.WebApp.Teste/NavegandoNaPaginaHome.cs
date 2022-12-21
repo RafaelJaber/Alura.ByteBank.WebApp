@@ -78,5 +78,19 @@ namespace Alura.ByteBank.WebApp.Teste
             driver.Close();
 
         }
+
+        [Fact]
+        public void TentaAcessarPaginaSemEstarLogado()
+        {
+            // Arrange
+            IWebDriver driver = new EdgeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+
+            // Act
+            driver.Navigate().GoToUrl("https://localhost:44309/Agencia/Index");
+
+            // Assert
+            Assert.Contains("401", driver.PageSource);
+            driver.Close();
+        }
     }
 }
