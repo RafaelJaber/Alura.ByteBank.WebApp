@@ -24,6 +24,7 @@ namespace Alura.ByteBank.WebApp.Teste
 
             // Assert
             Assert.Contains("WebApp", driver.Title);
+            driver.Close();
         }
 
         [Fact]
@@ -38,6 +39,7 @@ namespace Alura.ByteBank.WebApp.Teste
             //Assert
             Assert.Contains("Login", driver.PageSource);
             Assert.Contains("Home", driver.PageSource);
+            driver.Close();
         }
 
         [Fact]
@@ -56,6 +58,7 @@ namespace Alura.ByteBank.WebApp.Teste
             driver.FindElement(By.Id("Email")).SendKeys("rafael@email.com");
             driver.FindElement(By.Id("Senha")).SendKeys("senha01");
             driver.FindElement(By.Id("btn-logar")).Click();
+            driver.Close();
         }
 
         [Fact]
