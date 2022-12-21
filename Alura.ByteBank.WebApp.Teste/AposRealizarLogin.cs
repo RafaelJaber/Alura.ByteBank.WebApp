@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using Alura.ByteBank.WebApp.Teste.PageObjects;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
 using System;
 using System.Collections.Generic;
@@ -128,15 +129,21 @@ namespace Alura.ByteBank.WebApp.Teste
         public void RealizaLoginAcessaListagemDeContas()
         {
             // Arrange
-            _driver.Navigate().GoToUrl("https://localhost:44309/UsuarioApps/Login");
+            //_driver.Navigate().GoToUrl("https://localhost:44309/UsuarioApps/Login");
 
-            var login = _driver.FindElement(By.Name("Email"));
-            var senha = _driver.FindElement(By.Name("Senha"));
+            //var login = _driver.FindElement(By.Name("Email"));
+            //var senha = _driver.FindElement(By.Name("Senha"));
 
-            login.SendKeys("rafael@email.com");
-            senha.SendKeys("senha01");
+            //login.SendKeys("rafael@email.com");
+            //senha.SendKeys("senha01");
 
-            _driver.FindElement(By.Id("btn-logar")).Click();
+            //_driver.FindElement(By.Id("btn-logar")).Click();
+
+            var loginPo = new LoginPO(_driver);
+            loginPo.Navegar("https://localhost:44309/UsuarioApps/Login");
+
+            loginPo.PreencherCampos("rafael@email.com", "senha01");
+            loginPo.btnClick();
 
             // Act
             _driver.FindElement(By.Id("contacorrente")).Click();
