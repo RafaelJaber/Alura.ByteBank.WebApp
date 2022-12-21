@@ -57,5 +57,23 @@ namespace Alura.ByteBank.WebApp.Teste
             driver.FindElement(By.Id("Senha")).SendKeys("senha01");
             driver.FindElement(By.Id("btn-logar")).Click();
         }
+
+        [Fact]
+        public void ValidaLinkDeLoginNaHome()
+        {
+            // Arrange
+            IWebDriver driver = new EdgeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            driver.Navigate().GoToUrl("https://localhost:44309");
+
+            var linkLogin = driver.FindElement(By.LinkText("Login"));
+
+            // Act
+            linkLogin.Click();
+
+            // Assert
+            Assert.Contains("img", driver.PageSource);
+            driver.Close();
+
+        }
     }
 }
