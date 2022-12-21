@@ -109,7 +109,7 @@ namespace Alura.ByteBank.Infraestrutura.Testes
             Assert.True(atualizado);
         }
 
-        [Fact]
+        [Fact(Skip = "Não vou excluir nada do banco")]
         public void TestaRemoverInformacaoDeterminadaAgencia()
         {
             //Arrange
