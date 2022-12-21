@@ -8,12 +8,20 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Alura.ByteBank.WebApp.Teste
 {
     public class AposRealizarLogin
     {
-        private IWebDriver _driver = new EdgeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+        private IWebDriver _driver;
+        private ITestOutputHelper _saidaConsoleTeste;
+
+        public AposRealizarLogin(ITestOutputHelper saidaConsoleTeste)
+        {
+            _driver = new EdgeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            _saidaConsoleTeste = saidaConsoleTeste;
+        }
 
         [Fact]
         public void AposRealizarLoginVerificaSeExisteOpcaoAgenciaMenu()
@@ -114,6 +122,40 @@ namespace Alura.ByteBank.WebApp.Teste
             // Assert
             Assert.Contains("Logout", _driver.PageSource);
             _driver.Close();
+        }
+
+        [Fact]
+        public void RealizaLoginAcessaListagemDeContas()
+        {
+            // Arrange
+            _driver.Navigate().GoToUrl("https://localhost:44309/UsuarioApps/Login");
+
+            var login = _driver.FindElement(By.Name("Email"));
+            var senha = _driver.FindElement(By.Name("Senha"));
+
+            login.SendKeys("rafael@email.com");
+            senha.SendKeys("senha01");
+
+            _driver.FindElement(By.Id("btn-logar")).Click();
+
+            // Act
+            _driver.FindElement(By.Id("contacorrente")).Click();
+
+            IReadOnlyCollection<IWebElement> elements = _driver.FindElements(By.TagName("a"));
+
+
+            var element = (from webElement in elements
+                           where webElement.Text.Contains("Detalhes")
+                           select webElement).First();
+
+            // Act
+            element.Click();
+
+
+            // Assert
+            Assert.Contains("Voltar", _driver.PageSource);
+            _driver.Close();
+
         }
     }
 }
